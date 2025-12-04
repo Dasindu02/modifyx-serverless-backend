@@ -1,17 +1,16 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 
-dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Reuse DB connection across function calls
+// Reuse connection across invocations
 let conn = null;
 
 async function connectToDatabase() {
   if (conn == null) {
+    if (!process.env.MONGO_URI) throw new Error('MONGO_URI is not set');
     conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -27,7 +26,7 @@ app.get('/', async (req, res) => {
     res.send('Serverless MERN Backend');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Database connection error');
+    res.status(500).send('Database connection error: ' + error.message);
   }
 });
 
