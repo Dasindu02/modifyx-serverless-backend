@@ -1,11 +1,11 @@
-const serverless = require('serverless-http');
-const express = require('express');
-const mongoose = require('mongoose');
+// index.js
+import express from 'express';
+import mongoose from 'mongoose';
+import serverless from 'serverless-http';
 
 const app = express();
 app.use(express.json());
 
-// Reuse connection across invocations
 let conn = null;
 
 async function connectToDatabase() {
@@ -30,4 +30,4 @@ app.get('/', async (req, res) => {
   }
 });
 
-module.exports.handler = serverless(app);
+export default serverless(app);

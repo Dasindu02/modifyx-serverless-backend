@@ -1,22 +1,11 @@
 {
   "name": "modifyx-serverless-backend",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dasindu02/modifyx-serverless-backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Dasindu02/modifyx-serverless-backend/issues"
-  },
-  "homepage": "https://github.com/Dasindu02/modifyx-serverless-backend#readme",
   "dependencies": {
     "express": "^5.2.1",
     "mongoose": "^9.0.0",
