@@ -6,27 +6,32 @@ import serverless from "serverless-http";
 const app = express();
 app.use(express.json());
 
-let conn = null;
+let isConnected = false; // track connection
 
 async function connectToDatabase() {
-  if (conn) return conn;
+  if (isConnected) return;
+
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI not set");
 
-  conn = await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("MongoDB connected");
-  return conn;
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    isConnected = true;
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error("MongoDB connection failed:", err);
+    throw err;
+  }
 }
 
+// Health check route
 app.get("/", async (req, res) => {
   try {
-    // Only ping DB, don’t do heavy queries
     await connectToDatabase();
     res.status(200).send("Serverless MERN Backend OK");
   } catch (err) {
-    console.error(err);
     res.status(500).send("DB connection error: " + err.message);
   }
 });
