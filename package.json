@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/Dasindu02/modifyx-serverless-backend#readme",
   "dependencies": {
-    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongoose": "^9.0.0",
     "serverless-http": "^4.0.0"
