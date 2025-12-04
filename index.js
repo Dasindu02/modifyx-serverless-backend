@@ -1,10 +1,5 @@
-// index.js
-import express from "express";
+// api/index.js
 import mongoose from "mongoose";
-import serverless from "serverless-http";
-
-const app = express();
-app.use(express.json());
 
 let isConnected = false; // track connection
 
@@ -26,16 +21,11 @@ async function connectToDatabase() {
   }
 }
 
-// Health check route
-app.get("/", async (req, res) => {
+export default async function handler(req, res) {
   try {
     await connectToDatabase();
-    res.status(200).send("Serverless MERN Backend OK");
+    res.status(200).json({ message: "Serverless MERN Backend OK" });
   } catch (err) {
-    res.status(500).send("DB connection error: " + err.message);
+    res.status(500).json({ error: "DB connection error: " + err.message });
   }
-});
-
-app.get("/favicon.ico", (req, res) => res.status(204).end());
-
-export default serverless(app);
+}
