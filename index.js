@@ -1,7 +1,7 @@
 // api/index.js
 import mongoose from "mongoose";
 
-let isConnected = false; // track connection
+let isConnected = false; // track DB connection
 
 async function connectToDatabase() {
   if (isConnected) return;
