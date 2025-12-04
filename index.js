@@ -6,10 +6,11 @@ let isConnected = false; // track DB connection
 async function connectToDatabase() {
   if (isConnected) return;
 
-  if (!process.env.MONGO_URI) throw new Error("MONGO_URI not set");
+  const uri = process.env.MONGO_URI;
+  if (!uri) throw new Error("MONGO_URI is not set");
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
